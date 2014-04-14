@@ -1,8 +1,7 @@
-#include <math.h>
-#include <stdint.h>
-#include <errno.h>
 #include "euler.hpp"
+#include <math.h>
 #include <algorithm>
+#include <stdint.h>
 #include <iterator>
 #include <iostream>
 
@@ -15,12 +14,7 @@ int main(int argc, char **argv)
     const uint64_t n = 600851475143;
     const uint64_t bound = sqrt(n);
     auto p = euler::primes(bound);
-    decltype(p) factors;
-    for (auto i = p.cbegin(); i != p.cend(); ++i) {
-        if ((n % (*i)) == 0) {
-            factors.insert(*i);
-        }
-    }
-    copy(factors.begin(),factors.end(),ostream_iterator<uint64_t>(cout," "));
+    auto f = euler::factors(n,p);
+    copy(f.begin(),f.end(),ostream_iterator<uint64_t>(cout," "));
     return 0;
 }
