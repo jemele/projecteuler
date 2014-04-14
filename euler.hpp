@@ -1,7 +1,9 @@
 #ifndef _euler_hpp_
 #define _euler_hpp_
+#include <algorithm>
 #include <set>
 #include <vector>
+#include <sstream>
 
 namespace euler
 {
@@ -25,6 +27,18 @@ std::set<T> primes(T n)
     }
     return p;
 }
+
+// returns true if the number is a palindrome
+template <typename T>
+bool palindrome(T n)
+{
+    std::ostringstream s;
+    s << n;
+    auto r = s.str();
+    return std::equal(r.begin(), r.end(),
+                      r.rbegin());
+}
+
 
 } // namespace euler
 #endif //_euler_hpp_
