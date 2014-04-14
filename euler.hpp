@@ -28,6 +28,19 @@ std::set<T> primes(T n)
     return p;
 }
 
+// generate factors for n
+template <typename T>
+std::set<T> factors(T n, const std::set<T> & p)
+{
+    std::set<T> f;
+    for (auto i = p.cbegin(); i != p.cend(); ++i) {
+        if ((n % (*i)) == 0) {
+            f.insert(*i);
+        }
+    }
+    return f;
+}
+
 // returns true if the number is a palindrome
 template <typename T>
 bool palindrome(T n)
