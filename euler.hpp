@@ -1,9 +1,12 @@
 #ifndef _euler_hpp_
 #define _euler_hpp_
 #include <algorithm>
+#include <cmath>
 #include <set>
+#include <map>
 #include <vector>
 #include <sstream>
+#include <iostream>
 
 namespace euler
 {
@@ -20,7 +23,7 @@ std::set<T> primes(T n)
         }
         if (!sieve[i]) {
             p.insert(i);
-            for (auto j = i; j < n; j+=i) {
+            for (auto j = i; j <= n; j+=i) {
                 sieve[j] = true;
             }
         }
@@ -30,12 +33,18 @@ std::set<T> primes(T n)
 
 // generate factors for n
 template <typename T>
-std::set<T> factors(T n, const std::set<T> & p)
+std::map<T,std::size_t> factors(T n, const std::set<T> & p)
 {
-    std::set<T> f;
-    for (auto i = p.cbegin(); i != p.cend(); ++i) {
-        if ((n % (*i)) == 0) {
-            f.insert(*i);
+    std::map<T,std::size_t> f;
+    auto bound = std::sqrt(n) + 1;
+    for (auto i = p.cbegin(); (i != p.cend()) || (*i > bound); ++i) {
+        const auto prime = *i;
+        std::size_t order = 0;
+        for (auto d = n; (d % prime) == 0; d /= prime) {
+            ++order;
+        }
+        if (order) {
+            f[prime] = order;
         }
     }
     return f;
@@ -52,6 +61,12 @@ bool palindrome(T n)
                       r.rbegin());
 }
 
+// return the nth triangle number
+template <typename T>
+T triangle(T n)
+{
+    return (n*(n+1))/2;
+}
 
 } // namespace euler
 #endif //_euler_hpp_
