@@ -1,17 +1,6 @@
 #include <iostream>
-#include <sstream>
+#include "euler.hpp"
 using namespace std;
-
-// returns true if the number is a palindrome.
-// need the top bit set.
-bool palindrome(int n)
-{
-    ostringstream s;
-    s << n;
-    auto r = s.str();
-    return std::equal(r.begin(), r.end(),
-                      r.rbegin());
-}
 
 // A palindromic number reads the same both ways.
 // The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
@@ -22,12 +11,11 @@ int main(int, char**)
     for (auto i = 999; i >= 100; --i) {
         for (auto j = 999; j >= 100; --j) {
             const auto product = i*j;
-            if (palindrome(product)) {
+            if (euler::palindrome(product)) {
                 if (product > l) {
                     x = i;
                     y = j;
                     l = product;
-                    cout << i << ' ' << j << ' ' << product << endl;
                 }
             }
         }
